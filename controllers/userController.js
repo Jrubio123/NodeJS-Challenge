@@ -18,7 +18,15 @@ async function getSpecialPrice(req, res) {
       if (specialPrice) {
         res.json({ special_price: specialPrice.special_price });
       } else {
-        res.json({ special_price: -1 });
+        // Si no hay un precio especial, obtén el precio base del producto
+        const productsCollection = db.collection('products');
+        const product = await productsCollection.findOne({ product_name: nombre_producto });
+
+        if (product) {
+          res.json({ special_price: product.price });
+        } else {
+          res.status(404).json({ error: 'Producto no encontrado' });
+        }
       }
     } else {
       res.status(404).json({ error: 'Usuario no encontrado' });
