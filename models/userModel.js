@@ -1,12 +1,17 @@
-const specialPriceSchema = new mongoose.Schema({
+const { ObjectId } = require('mongodb');
+
+
+const specialPriceSchema = {
   product_name: String,
   special_price: Number,
-});
+};
 
-const userSchema = new mongoose.Schema({
+// Definición del esquema de usuario
+const userSchema = {
   id: Number,
   name: String,
   special_prices: [specialPriceSchema],
-});
+};
 
-module.exports = mongoose.model('User', userSchema);
+
+module.exports = userSchema;
